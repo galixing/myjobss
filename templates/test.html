@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <link rel="stylesheet" href="{% static 'test.css' %}">
+    <script type="text/javascript" src="{% static 'jquery-1.12.4.min.js' %}"></script>
+    <script>
+            $(function(){
+                loadProvince();
+            });
+
+
+            function loadProvince(){
+                loadArea('province',0,loadCity);
+            }
+
+            function loadCity(){
+                loadArea('city',$('#province').val(),loadTown);
+            }
+
+            function loadTown(){
+                loadArea('town',$('#city').val());
+            }
+
+            function loadArea(selectId,pid,nextLoad){
+                $('#'+selectId).empty();
+
+                $.get('area/loadArea/',{'pid':pid},function(result){
+                    console.log(result.jareaList);
+
+                    //将json格式字符串转换成json对象数组
+                    var areaList = JSON.parse(result.jareaList);
+
+                    //遍历数组
+                    for(var i=0;i<areaList.length;i++){
+                        //获取每一个area的json对象
+                        var area = areaList[i];
+
+                        $('#'+selectId).append("<option value='"+area.pk+"'>"+area.fields.areaname+"</option>");
+                    }
+
+                    //判断是否需要加载下一级菜单
+                    if(nextLoad!=null){
+                        nextLoad();
+                    }
+
+                });
+
+
+            }
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+    <div>
+        <select id="province" onchange="loadCity();">
+            <option value="a">浙江省</option>
+        </select>
+        <select id="city" onchange="loadTown();">
+            <option value="a">温州市</option>
+        </select>
+        <select id="town">
+            <option value="a">瑞安区</option>
+    </div>
+</body>
+
+<script>
+address = function(a, b)
+{
+    $.get('/addr/'+a, function (dic){
+        $.each(dic, function(index, item){
+            b.append('<option value="' + item.id + '">' + item.address + '</option>')
+        })
+    })
+}
+
+$(function (){
+    // 获取省市县元素
+    pro = $('#pro')
+    city = $('#city')
+    dis = $('#dis')
+
+    // 查询省信息
+    address(0, pro)
+
+    // 根据省查询市信息
+    pro.change(function(){
+        city.empty().append('<option value="">请选择市</option>');
+        dis.empty().append('<option value="">请选择县</option>');
+        adress(this.value, city)
+    })
+    // 根据市查询县信息
+    city.change(function(){
+        dis.empty().append('<option value="">请选择县</option>');
+        adress(this.value, dis)
+    })
+})
+
+
+</script>
+
+</html>

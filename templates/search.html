@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title%}快聘 | 搜索{{ search_words }} {% endblock %}
+{% block content%}
+
+<div>
+    <span> 查找 "{{ search_words }}"一共找到 "{{ search_of_company.count }}" 家公司 "{{ search_of_jobs.count }}" 个职位"{{ search_of_resume.count }}" 份简历 </span>
+    <hr>
+    <div class="row" >
+        <span>公司</span>
+        {% for company in search_of_company %}
+        <p>
+            <a href="{% url 'company_detail' company.pk %}">{{ company.name }}</a>
+        </p>
+        {% empty %}
+        搜搜不一样的试试
+        {% endfor %}
+        <hr>
+        <span>职位</span>
+       <span>共 “{{ search_of_jobs.count }}”个职位</span>
+        {% for job in search_of_jobs %}
+        <p>
+            <a href="{% url 'job_detail' job.pk %}">{{ job.name }}</a>
+        </p>
+        {% empty %}
+        搜搜不一样的试试
+        {% endfor %}
+        <hr>
+        <span>简历</span>
+        {% for resume in search_of_resume %}
+        <p>
+            <a href="{% url 'resume_detail' resume.pk %}">{{ resume.name }}</a>
+        </p>
+        {% empty %}
+        搜搜不一样的试试
+        {% endfor %}
+        <hr>
+    </div>
+
+</div>
+{% endblock %}

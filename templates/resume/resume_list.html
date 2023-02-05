@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} 简历库 {% endblock %}
+
+{% block content%}
+<div>
+    {% for re in list %}
+    {{ re.name }}
+    {% empty %}
+    暂无简历
+    {% endfor %}
+</div>
+{% endblock %}

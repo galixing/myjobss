@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} 更多职位{% endblock %}
+
+{% block content%}
+
+<div class="row row-no-gutters">
+    <div class="col-xs-12 col-md-8">
+        {% for job in job_list %}
+        <ul>
+            <li><a href="{% url 'job_detail' job.pk %}">名称：{{ job.name }}</a>&nbsp;|&nbsp;所在地：{{ job.get_job_city_display }}
+                &nbsp;|&nbsp;类型：{{ job.get_job_type_display }}&nbsp;|&nbsp;招聘数量：{{ job.job_num }} &nbsp;|&nbsp;更新日期：{{ job.modified_date }}
+            </li>
+            <li>岗位职责：{{ job.job_requirement |striptags|truncatechars_html:120}}</li>
+            <li>任职要求：{{ job.job_responsibility|striptags|truncatechars:120}}</li>
+        </ul>
+        <hr/>
+        {% endfor %}
+       <a href="{% url 'add' %}"> <li class="btn btn-primary">发布新职位</li></a>
+        <li class="btn btn-primary">登记新简历</li>
+        <ul class="pagination">
+            {# 上一页 #}
+            <li>
+                {% if page_of_job.has_previous %}
+                <a href="?page={{ page_of_job.pageprevious_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                {% else %}
+                <span aria-hidden="true">&laquo;</span>
+                {% endif %}
+            </li>
+            {# 全部页码 #}
+            {% for page_num in page_of_job.paginator.page_range %}
+            <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+            {% endfor %}
+            {# 下一页 #}
+            <li>
+                {% if page_of_job.has_next %}
+                <a href="?page={{ page_of_job.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% else %}
+                <span aria-hidden="true">&raquo;</span>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-md-4">{{ user }}
+        </div>
+        </div>
+
+        {% endblock %}

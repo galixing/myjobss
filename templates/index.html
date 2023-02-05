@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %} 快聘 | 首页{% endblock %}
+{% load static %}
+{% load comment_tags %}
+
+{% block content%}
+<div class="row">
+    <div class="col-sm-6 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">热评榜单</div>
+            <div class="panel-body">
+                <ul class="blog-types">
+                    {% for company in companys %}
+                    <p><a href='{% url 'company_detail' company.pk %}'><h5>{{ company.name }}</a></h5>{% get_comment_count company %}条评论  ？条点赞 ？次浏览</p>
+                    {% empty %}
+                    暂无
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <span>最新评论</span>  <span align="right">最新评论</span>
+            </div>
+            <div class="panel-body">
+                <ul class="blog-types">
+                    {% for comment in comments %}
+                    <li><a href="#">{{comment.user}}</a> 在 {{comment.comment_time}}留言</li><li>&nbsp&nbsp&nbsp&nbsp<a href="#">{{comment.content_object}}</a>:{{ comment.text|safe }}</li>
+                    {% empty %}
+                    来发第一条
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class=panel-default>
+        <div class="panel-heading">最新招聘</div>
+            <div class="panel-body">
+                <ul>
+                    {% for job in jobs %}
+                        <a href="">{{ job.name }}</a>
+                    {% empty %}
+                        空缺中
+                    {% endfor %}
+                </ul>
+            </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class=panel-default>
+        <div class="panel-heading">最新企业</div>
+            <div class="panel-body">
+                <ul>
+                    {% for company in company_list %}
+                    <a href="">{{ company.name }}</a>
+                     {% empty %}
+                    空缺中
+                    {% endfor %}
+                </ul>
+            </div>
+
+    </div>
+</div>
+
+{% endblock %}

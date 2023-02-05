@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}用户登录 {% endblock %}
+
+{% block content%}
+<div class="containter">
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">登录</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <ul>
+                            <li><label for="username">用户名：</label>
+                                <input type="text" name="username" id="username"></li>
+                            <li><label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                                <input type="password" name="password" id="password">
+                                <span class="pull-left text-danger">{{ form.non_field_errors }}</span>
+                                <input type="submit" value="登录" class="btn btn-primary pull-right"></li>
+                        </ul>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

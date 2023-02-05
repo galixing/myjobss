@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} {{job.job_name }} {% endblock %}
+{% block content%}
+<div class="row row-no-gutters">
+    <div class="col-xs-12 col-md-8">
+        <div class="ul">
+            <h4>职位：{{ job.name}}</h4>
+            <ul>
+                <li>所在地：<a href="">{{ job.get_job_city_display }}</a>&nbsp;|&nbsp; 职业类型：<a href="">{{ job.get_job_type_display }}</a>&nbsp;|&nbsp;
+                    招聘数量：{{ job.job_num }}
+                </li>
+                <li>更新时间：{{ job.modified_date|date:"Y-m-d H:i:s" }}</li>
+                <li>工作职责：{{ job.job_responsibility}}</li>
+                <li>工作要求：{{ job.job_requirement }}</li>
+            </ul>
+        </div>
+        <hr/>
+        <div align="center"><h4><a href="">联系HR</a> &nbsp; &nbsp; |&nbsp; &nbsp; <a href="">投递简历</a>&nbsp; &nbsp; |&nbsp; &nbsp;  <a href="">电话</a> </h4> </div>
+        <hr/>
+        <div>
+            <ul>
+                <li>{{ company.name }}有【{{ jobs.count }}】个职位:</li>
+                {% for job in jobs %}
+                <li><a href=" {% url 'job_detail' job.pk %}"> {{ job }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-4">
+        <ul>
+            <h3>{{ company }}</h3>
+            <li><strong>地址：</strong>{{ company.address }}</li> <li><strong>电话：</strong>{{ company.phone }}</li>
+            <li><strong>企业简介：</strong>{{ company.introduce }}</li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}

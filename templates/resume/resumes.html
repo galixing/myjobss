@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}简历 {% endblock %}
+
+{% block content%}
+<div class="row">
+    {% for jian in resumes %}
+    <a href="">{{ jian.name }}</a>
+    {% empty %}
+    暂无
+    {% endfor %}
+</div>
+{% endblock %}

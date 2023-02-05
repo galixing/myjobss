@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} 发布职位 {% endblock %}
+{% block content%}
+{{ user }}
+<div class="form">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="panel panel-default">
+    <div class="panel-body" style="align:left"" >
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <ul>
+                <li><label >{{ field.label }}</label>
+                    {{ field }}
+                </li>
+            </ul>
+            {% endfor %}
+        <input type="hidden" name="creator" value="{{ user }}">
+        <input type="submit" value="发布">
+    </form>
+</div>
+{% endblock %}

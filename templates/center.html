@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} 用户中心 {% endblock %}
+
+{% block content%}
+<div>
+    <ul>
+        <h3>{{ loginer }}</h3>
+        <li>认证了{{ company.count }}家企业：
+            {% for c in company %}
+            {{ c.name}}
+            {% empty %}
+            暂时没有
+            {% endfor %}
+
+        </li>
+        <li>共计{{ jobs.count }}个有效职位：
+            {% for job in jobs %}
+            {{ job.job_name}}
+            {% empty %}
+            暂无
+            {% endfor %}
+        </li>
+        <li>共有{{ comments.count }}评论:
+            {% for comment in comments %}
+            {{ comment.text }}
+            {% empty %}
+            暂无评论
+            {% endfor %}
+
+        </li>
+    </ul>
+
+
+</div>
+{% endblock %}

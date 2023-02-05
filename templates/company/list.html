@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} 更多企业 {% endblock %}
+{% load static %}
+{% load comment_tags %}
+{% block content%}
+<div class="row row-no-gutters">
+    <div class="col-xs-12 col-md-8">
+        <div>当前有{{ company_list.count }}家公司</div>
+        <hr>
+        <ul>{% for company in company_list %}
+            <li>
+                <a href="{% url 'company_detail' company.pk %}">{{ company.name }}</a>&nbsp &nbsp{% get_comment_count company %}条评论
+            </li>
+            {% empty %}
+            暂无企业
+            {% endfor %}
+            <hr>
+        </ul>
+        <ul>
+            <a href="{% url 'add_company' %}">
+                <li class="btn btn-primary">发布新企业</li>
+            </a>
+        </ul>
+    </div>
+    <div class="col-xs-6 col-md-4"> {{ user }}</div>
+</div>
+
+{% endblock %}
